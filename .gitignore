@@ -1,0 +1,36 @@
+# Environnements virtuels
+venv/
+env/
+.venv/
+.env/
+
+# Fichiers de configuration
+*.env
+
+# Fichiers de log
+*.log
+
+# Fichiers de cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Répertoires de l'IDE
+.vscode/
+.idea/
+
+# Fichiers générés par le système d'exploitation
+.DS_Store
+
+# Fichiers de test
+.coverage
+.tox/
+nosetests.xml
+coverage.xml
+*.cover
+.hypothesis/
+
+# Fichiers de distribution
+dist/
+build/
+*.egg-info/
