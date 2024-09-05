@@ -1,6 +1,6 @@
 from dotenv import load_dotenv
 import os
-from urllib.parse import quote_plus
+from urllib.parse import urlparse, quote_plus, urlunparse
 
 load_dotenv()
 
@@ -10,12 +10,20 @@ class Config:
     raw_database_url = os.getenv('DATABASE_URL')
 
     if raw_database_url:
-        parts = raw_database_url.split('@')
-        user_info = parts[0].split('//')[1]
-        user, password = user_info.split(':')
-        encoded_password = quote_plus(password)
-        user_info_encoded = f'{user}:{encoded_password}'
-        DATABASE_URL = raw_database_url.replace(user_info, user_info_encoded)
+        parsed_url = urlparse(raw_database_url)
+        username = parsed_url.username
+        password = quote_plus(parsed_url.password)
+        netloc = f"{username}:{password}@{parsed_url.hostname}"
+        if parsed_url.port:
+            netloc += f":{parsed_url.port}"
+        DATABASE_URL = urlunparse((
+            parsed_url.scheme,
+            netloc,
+            parsed_url.path,
+            parsed_url.params,
+            parsed_url.query,
+            parsed_url.fragment
+        ))
     else:
         DATABASE_URL = None
 
