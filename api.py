@@ -34,7 +34,8 @@ class RepItem(db.Model):
 def read_report_preview_lock():
     try:
         with open(os.getenv('PATH_TO_LOCK_FILE'), 'r') as file:
-            return file.strip()
+            first_line = file.readline().strip()
+            return first_line if first_line else None
     except FileNotFoundError:
         return None
 
@@ -47,10 +48,17 @@ def event_scan():
 
         # updating the report preview
         if read_report_preview_lock():
-            store_id = int(read_report_preview_lock())
+            store_id = read_report_preview_lock()
+            if store_id is None:
+                return {'error': 'Store ID is not set in lock file'}, 400
+            store_id = int(store_id)
             product = Product.query.filter_by(barcode=barcode).first()
+            if product is None:
+                return {'error': 'Product with this barcode not found'}, 404
             repitem_entry = RepItem.query.filter_by(store_id=store_id, product_id=product.id).first()
             if repitem_entry is not None:
+                if repitem_entry.scanned is None:
+                    repitem_entry.scanned = 0
                 repitem_entry.scanned += 1
                 db.session.commit()
 
