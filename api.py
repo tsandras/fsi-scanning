@@ -22,6 +22,7 @@ class Product(db.Model):
     __tablename__ = 'product'
     id = db.Column(db.Integer, primary_key=True)
     barcode = db.Column(db.String(100), nullable=True)
+    name = db.Column(db.String(250), nullable=False)
 
 class RepItem(db.Model):
     __tablename__ = 'repitem'
