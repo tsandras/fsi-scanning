@@ -63,8 +63,8 @@ def report_preview():
         identifier = data.get('identifier')
         print(identifier)
         # updating the report preview
-        if read_report_preview_lock():
-            store_id = read_report_preview_lock()
+        if read_report_preview_lock(identifier):
+            store_id = read_report_preview_lock(identifier)
             if store_id is None:
                 return {'error': 'Store ID is not set in lock file'}, 400
             store_id = int(store_id)
