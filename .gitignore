@@ -31,6 +31,5 @@ coverage.xml
 .hypothesis/
 
 # Fichiers de distribution
-dist/
 build/
 *.egg-info/

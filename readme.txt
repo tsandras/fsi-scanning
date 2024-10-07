@@ -10,3 +10,7 @@ killall gunicorn
 ## Run on production without need to restart
 
 /var/www/fsi-scanning/fsi/bin/gunicorn -c gunicorn_config.py api:app --reload --daemon
+
+## How to create exec
+
+sudo pyinstaller --onefile scanner.py
