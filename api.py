@@ -85,7 +85,9 @@ def report_preview():
                     repitem_entry.scanned += compo_product.quantity
                 db.session.commit()
 
-        return {'message': 'Success'}, 200
+            return {'message': 'Success'}, 200
+        else:
+            return {'error': 'Impossible to find a store for this user'}    
     else:
         return {'error': 'The request payload is not in JSON format'}
 

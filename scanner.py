@@ -28,11 +28,12 @@ def on_press(key):
     try:
         if key.char and key.char.isalnum():
             keys.append(key.char)
-            print('alphanumeric key {0} pressed'.format(key.char))
-        else:
-            print('non-alphanumeric key {0} pressed'.format(key))
+            # print('alphanumeric key {0} pressed'.format(key.char))
+        # else:
+            # print('non-alphanumeric key {0} pressed'.format(key))
     except AttributeError:
-        print('special key {0} pressed'.format(key))
+        pass
+        # print('special key {0} pressed'.format(key))
 
 def send_post_request(data):
     if identifier:
@@ -66,9 +67,12 @@ def send_post_request(data):
 def on_release(key):
     global keys
     				
-    print('{0} released'.format(key))
+    # print('{0} released'.format(key))
     if key == Key.enter:
         logging.info('enter released')
+        print('enter released')
+        print('Identifier:', identifier)
+        print('Press escape to reset identifier')
         if re.match(GTIN_REGEX, ''.join(keys)):
             data = {
                 'barcode': ''.join(keys),
