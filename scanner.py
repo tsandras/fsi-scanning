@@ -45,7 +45,11 @@ def send_post_request(data):
         logging.error('API_URL is not set')
         return None
 
+    api_key = os.getenv('API_KEY')
     headers = {'Content-Type': 'application/json'}
+    if api_key:
+        headers['Authorization'] = f'Bearer {api_key}'
+
     data = json.dumps(data).encode()
     req = urllib.request.Request(url, data=data, headers=headers)
     
